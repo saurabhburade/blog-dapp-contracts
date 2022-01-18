@@ -13,6 +13,7 @@ contract User {
         uint256 timestamp;
         uint256 createdBlock;
     }
+    Blog[] myBlogs;
 
     constructor(
         string memory _userName,
@@ -52,5 +53,43 @@ contract User {
         )
     {
         return (userName, bio, profileImage, owner);
+    }
+
+    function createBlog(string memory blogIPFShash) public {
+        address _owner = msg.sender;
+        BlogContract child = new BlogContract(_owner, blogIPFShash);
+        Blog memory newBlog = Blog(
+            address(child),
+            block.timestamp,
+            block.number
+        );
+        myBlogs.push(newBlog);
+    }
+}
+
+contract BlogContract {
+    uint256 createdblock;
+    uint256 timestamp;
+    address owner;
+    string blogIPFShash;
+
+    constructor(address _owner, string memory _blogIPFShash) {
+        createdblock = block.number;
+        owner = _owner;
+        blogIPFShash = _blogIPFShash;
+        timestamp = block.timestamp;
+    }
+
+    function getBlockFields()
+        public
+        view
+        returns (
+            uint256 _createdblock,
+            uint256 _timestamp,
+            address _owner,
+            string memory _blogIPFShash
+        )
+    {
+        return (createdblock, timestamp, owner, blogIPFShash);
     }
 }
