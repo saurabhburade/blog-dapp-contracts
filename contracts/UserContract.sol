@@ -46,13 +46,14 @@ contract User {
         public
         view
         returns (
-            string memory,
-            string memory,
-            string memory,
-            address
+            string memory _userName,
+            string memory _bio,
+            string memory _profileImage,
+            address _owner,
+            Blog[] memory _myBlogs
         )
     {
-        return (userName, bio, profileImage, owner);
+        return (userName, bio, profileImage, owner, myBlogs);
     }
 
     function createBlog(string memory blogIPFShash) public {
@@ -80,7 +81,7 @@ contract BlogContract {
         timestamp = block.timestamp;
     }
 
-    function getBlockFields()
+    function getFields()
         public
         view
         returns (
