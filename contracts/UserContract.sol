@@ -6,8 +6,9 @@ contract User {
     address owner;
     address admin;
     string bio = "default";
-    string profileImage;
-    string coverImage;
+    string profileImage = "default";
+    string coverImage = "default";
+    uint256 idx;
     struct Blog {
         address _address;
         uint256 timestamp;
@@ -18,11 +19,13 @@ contract User {
     constructor(
         string memory _userName,
         string memory _profileImage,
-        address _owner
+        address _owner,
+        uint256 _idx
     ) {
         userName = _userName;
         profileImage = _profileImage;
         owner = _owner;
+        idx=_idx;
     }
 
     // Function to add/update bio
@@ -50,11 +53,14 @@ contract User {
             string memory _bio,
             string memory _profileImage,
             address _owner,
+            uint256 _idx,
             Blog[] memory _myBlogs
         )
     {
-        return (userName, bio, profileImage, owner, myBlogs);
+        return (userName, bio, profileImage, owner,idx, myBlogs);
     }
+
+    event BlogCreated(address blogAddress, string _blogIPFShash);
 
     function createBlog(string memory blogIPFShash) public {
         address _owner = msg.sender;
@@ -64,6 +70,8 @@ contract User {
             block.timestamp,
             block.number
         );
+        emit BlogCreated(address(child), blogIPFShash);
+
         myBlogs.push(newBlog);
     }
 }
