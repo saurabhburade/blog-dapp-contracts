@@ -74,9 +74,21 @@ module.exports = {
       provider: () =>
         new HDWalletProvider(mnemonic, `https://rpc.testnet.fantom.network`),
       network_id: 4002, // ftmTestnet's id
-      gas: 1000000, // ftmTestnet has a lower block limit than mainnet
+      gas: 5000000, // ftmTestnet has a lower block limit than mainnet
       confirmations: 5, // # of confs to wait between deployments. (default: 0)
-      timeoutBlocks: 100, // # of blocks before a deployment times out  (minimum/default: 50)
+      timeoutBlocks: 10000, // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: false, // Skip dry run before migrations? (default: false for public nets )
+    },
+    bscTest: {
+      provider: () =>
+        new HDWalletProvider(
+          mnemonic,
+          `https://data-seed-prebsc-1-s1.binance.org:8545/`
+        ),
+      network_id: 97, // ftmTestnet's id
+      gas: 5000000, // ftmTestnet has a lower block limit than mainnet
+      confirmations: 5, // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 10000, // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: false, // Skip dry run before migrations? (default: false for public nets )
     },
   },
