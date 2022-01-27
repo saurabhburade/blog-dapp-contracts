@@ -23,7 +23,7 @@ contract UsersFactory {
         public
     {
         address _owner = msg.sender;
-        uint256 _id = children.length - 1;
+        uint256 _id = children.length;
         User child = new User(_userName, _profileImage, _owner, _id);
         UserSruct memory newUserDetails = UserSruct(_owner, address(child));
         childMap[_owner] = newUserDetails;
